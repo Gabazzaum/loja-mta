@@ -1,0 +1,152 @@
+<!DOCTYPE html><html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mony RP - Loja</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #0a0a0a;
+      color: #fff;
+    }
+    header, footer {
+      text-align: center;
+      padding: 20px;
+      background-color: #0f0f0f;
+    }
+    .logo {
+      font-size: 1.8em;
+      color: #00ffff;
+      font-weight: bold;
+    }
+    .container {
+      padding: 20px;
+      max-width: 1200px;
+      margin: auto;
+    }
+    .products {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 20px;
+    }
+    .product {
+      background-color: #121212;
+      padding: 20px;
+      border-radius: 10px;
+      border: 1px solid #00ffff44;
+      text-align: center;
+    }
+    .product h3 {
+      margin: 10px 0;
+    }
+    .product button {
+      background-color: #00ffff;
+      border: none;
+      color: #000;
+      padding: 10px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    #cart {
+      margin-top: 40px;
+      background: #1a1a1a;
+      padding: 20px;
+      border-radius: 10px;
+    }
+    #checkout {
+      margin-top: 20px;
+      background: #121212;
+      padding: 20px;
+      border-radius: 10px;
+      display: none;
+    }
+    .pix-box {
+      background: #222;
+      padding: 15px;
+      border-radius: 10px;
+      border: 1px dashed #00ffff;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">Mony Roleplay</div>
+    <p>Servidor Online - Junte-se agora!</p>
+  </header>  <div class="container">
+    <h2>Loja</h2>
+    <div class="products" id="product-list">
+      <!-- Produtos inseridos via JS -->
+    </div><div id="cart">
+  <h3>Carrinho</h3>
+  <ul id="cart-items"></ul>
+  <p>Total: R$ <span id="cart-total">0.00</span></p>
+  <button onclick="checkout()">Finalizar Pedido</button>
+</div>
+
+<div id="checkout">
+  <h3>Pagamento via Pix</h3>
+  <div class="pix-box">
+    <p><strong>Valor Total:</strong> R$ <span id="checkout-total"></span></p>
+    <p><strong>Chave Pix:</strong> e47e72bb-58d1-4f26-8c97-68bbe97ea20f</p>
+    <p>Após o pagamento, envie o comprovante no Discord: <strong>im.sv2</strong></p>
+  </div>
+</div>
+
+  </div>  <footer>
+    <p>© 2024 Brasil Mundo Imperial. Todos os direitos reservados.</p>
+  </footer>  <script>
+    const products = [
+      { name: 'VIP Alpha', price: 10 },
+      { name: 'VIP Epsylon', price: 10 },
+      { name: 'VIP Sigma', price: 15 },
+      { name: 'VIP Omega', price: 34 },
+      { name: 'VIP Imperium', price: 15 },
+      { name: 'VIP Patrocinador', price: 15 },
+      { name: 'Unban', price: 30 },
+      { name: 'Alteração de ID', price: 15 },
+      { name: 'Corporação', price: 25 },
+      { name: 'Facção', price: 20 }
+    ];
+
+    const cart = [];
+
+    function renderProducts() {
+      const list = document.getElementById('product-list');
+      list.innerHTML = '';
+      products.forEach((p, i) => {
+        list.innerHTML += `
+          <div class="product">
+            <h3>${p.name}</h3>
+            <p>R$ ${p.price.toFixed(2)}</p>
+            <button onclick="addToCart(${i})">Comprar Agora</button>
+          </div>
+        `;
+      });
+    }
+
+    function addToCart(index) {
+      cart.push(products[index]);
+      updateCart();
+    }
+
+    function updateCart() {
+      const items = document.getElementById('cart-items');
+      const total = document.getElementById('cart-total');
+      items.innerHTML = '';
+      let sum = 0;
+      cart.forEach((item, i) => {
+        sum += item.price;
+        items.innerHTML += <li>${item.name} - R$ ${item.price.toFixed(2)}</li>;
+      });
+      total.innerText = sum.toFixed(2);
+    }
+
+    function checkout() {
+      document.getElementById('checkout').style.display = 'block';
+      document.getElementById('checkout-total').innerText = document.getElementById('cart-total').innerText;
+    }
+
+    renderProducts();
+  </script></body>
+</html>
